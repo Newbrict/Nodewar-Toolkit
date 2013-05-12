@@ -1,4 +1,3 @@
-
 ////////////////////////////////////////////////////////
 // M""""""""M                   dP dP       oo   dP   //
 // Mmmm  mmmM                   88 88            88   //
@@ -24,7 +23,6 @@ edge_dist = function(o, pos) {
   return o.lib.vec.dist(o.lib.vec.fromPolar([o.game.moon_field, o.lib.vec.toPolar(pos)[1]]),pos);
 };
 
-// Credit to @Malgorithms
 // Get's the spot on the moon field's edge that you would
 // fly out of if you continued your current trajectory
 get_board_exit_pos = function(o) {
