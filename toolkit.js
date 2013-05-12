@@ -28,21 +28,14 @@ edge_dist = function(o, pos) {
 // Get's the spot on the moon field's edge that you would
 // fly out of if you continued your current trajectory
 get_board_exit_pos = function(o) {
-  var ddt, dt, maxt, px, py, rad_sq, t, vx, vy, _ref, _ref1;
-  t = 0;
-  dt = 0.05;
-  ddt = 0.025;
-  maxt = 10;
-  v = o.me.vel;
-  p = o.me.pos;
-  rad_sq = Math.pow(o.game.moon_field, 2);
-  while ((t < maxt) && (p[0] * p[0] + p[1] * p[1] < rad_sq)) {
-    t += dt;
-    p[0] += v[0] * dt;
-    p[1] += v[1] * dt;
-    dt += ddt;
-  }
-  return p;
+  var magp = o.lib.vec.len(o.me.pos);
+  var magv = o.lib.vec.len(o.me.vel);
+  var dp = o.lib.vec.dotProduct(o.lib.vec.times(o.me.pos, -1), o.me.vel);
+  var ship_angle = Math.acos(dp / (magp * magv));
+  var exit_angle = Math.asin(magp * Math.sin(ship_angle) / o.game.moon_field);
+  var center_angle = Math.PI - ship_angle - exit_angle;
+  var mage = o.game.moon_field * Math.sin(center_angle) / Math.sin(ship_angle);
+  return o.lib.vec.fromPolar([mage, o.lib.vec.ang(o.me.vel)]);
 };
 
 // Gives you the future position of target_ship relative to ship -- limited
